@@ -1,0 +1,114 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100vh;
+
+    background-color: black;
+}
+
+.App {
+    display: flex;
+}
+
+.countWrapper,
+.settingsWrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 350px;
+    margin: 0 5px;
+    padding: 10px 0;
+
+    border: 1px solid greenyellow;
+    border-radius: 15px;
+}
+
+.settingsIn {
+    color: white;
+    width: 300px;
+    height: 100px;
+}
+
+.settingsIn .settings span {
+    margin: 10px;
+}
+.settings input {
+    margin-top: 20px;
+
+    text-align: center;
+
+    color: white;
+    border: 1px solid greenyellow;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+.maxValue {
+    font-size: 60px;
+    font-weight: bold;
+
+    color: red;
+}
+.pressSet{
+    font-size: 17px;
+}
+.settings .errorMinValue{
+    background-color: #d44242;
+}
+.settings .errorMaxValue{
+    background-color: #d44242;
+}
+.displayWrapper {
+    font-size: 50px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 300px;
+    height: 100px;
+
+    border-radius: 10px;
+    background-color: greenyellow;
+}
+
+
+.App input:focus{
+    outline: none;
+}
+
+.buttonWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    width: 200px;
+    margin-top: 20px;
+    padding: 10px 0;
+
+    border: 1px solid greenyellow;
+    border-radius: 15px;
+}
+
+.button {
+    font-size: 20px;
+    font-weight: bold;
+
+    padding: 5px 15px;
+
+    cursor: pointer;
+
+    border: 0;
+    border-radius: 5px;
+    background-color: mediumseagreen;
+}
+
+.button:focus {
+    outline: none !important;
+}

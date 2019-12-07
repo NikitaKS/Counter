@@ -13,7 +13,7 @@ class SettingsDisplay extends React.Component {
     };
     changeMinValue = (e) => {
         let value = parseInt(e.currentTarget.value);
-        if (value > this.props.maxValue){
+        if (value > this.props.maxValue || value < -1){
 
         } else{
             this.props.changeMinValue(value);

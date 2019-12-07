@@ -64,7 +64,8 @@ class App extends React.Component {
     };
     inputError = (value) => {
         let a = value;
-        if (a === this.state.maxValue || a < 0 || a === this.state.startValue) {
+        debugger
+        if (a === this.state.maxValue || a < 0 || a === this.state.startValue || isNaN(a) || this.state.startValue < 0) {
             this.setState({
                 inputError: true
             })
@@ -100,7 +101,7 @@ class App extends React.Component {
                     <div className='buttonWrapper'>
                         <Button title='SET'
                                 callback={this.setSettings}
-                                disabled={!this.state.isDisable || this.state.inputError}/>
+                                disabled={this.state.inputError}/>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 {
   "name": "01-todolist",
   "version": "0.1.0",
-  "homepage": "https://nikitaks.github.io/Counter/",
+  "homepage": "https://nikitaks.github.io/Counter",
   "private": true,
   "dependencies": {
     "react": "^16.8.6",

@@ -1,14 +1,18 @@
 {
   "name": "01-todolist",
   "version": "0.1.0",
+  "homepage": "https://nikitaks.github.io/Counter/",
   "private": true,
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-hamburger-menu": "^1.1.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "yarn": "^1.21.0"
   },
   "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -30,6 +34,7 @@
     ]
   },
   "devDependencies": {
-    "csscomb": "^4.3.0"
+    "csscomb": "^4.3.0",
+    "gh-pages": "^2.1.1"
   }
 }

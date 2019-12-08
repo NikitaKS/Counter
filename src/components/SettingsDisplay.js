@@ -4,25 +4,19 @@ import '../App.css';
 class SettingsDisplay extends React.Component {
     changeMaxValue = (e) => {
         let value = parseInt(e.currentTarget.value);
-        if (value < this.props.startValue ){
-
-        } else {
+        if (!(value < this.props.startValue)){
             this.props.changeMaxValue(value);
         }
-
     };
     changeMinValue = (e) => {
         let value = parseInt(e.currentTarget.value);
-        if (value > this.props.maxValue || value < -1){
-
-        } else{
+        if (!(value > this.props.maxValue || value < -1)){
             this.props.changeMinValue(value);
         }
     };
     render = () => {
-
-        let errorMinValue = (this.props.startValue >= this.props.maxValue || this.props.startValue < 0) ? 'errorMinValue' : '';
-        let errorMaxValue = (this.props.startValue === this.props.maxValue || this.props.maxValue < 0) ? 'errorMaxValue' : '';
+        let errorMinValue = this.props.inputError ? 'errorMinValue' : '';
+        let errorMaxValue = this.props.inputError ? 'errorMaxValue' : '';
         return (
             <div className="settingsIn">
                 {

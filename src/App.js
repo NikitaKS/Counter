@@ -21,19 +21,21 @@ class App extends React.Component {
                 value: 0,
                 startValue: 0,
                 maxValue: 6,
-                isDisable: false,
+                isDisable: true,
                 inputError: false,
             })
         }
     }
+
     componentWillUpdate(nextProps, nextState) {
         localStorage.setItem('state', JSON.stringify(nextState));
     }
+
     state = {};
     incValue = () => {
         let inc = this.state.value;
         this.setState({
-            value: ++inc
+            value: ++inc,
         });
     };
     resetValue = () => {
@@ -42,39 +44,67 @@ class App extends React.Component {
         });
     };
     changeMaxValue = (value) => {
-        this.inputError(value);
-        this.setState({
-            maxValue: value,
-            value: this.state.startValue,
-            isDisable: true
-        });
+            this.valueError(value,this.state.startValue);
+            this.setState({
+                maxValue: value,
+                value: this.state.startValue,
+            });
     };
     changeMinValue = (value) => {
-        this.inputError(value);
-        this.setState({
-            startValue: value,
-            value: value,
-            isDisable: true
-        });
+            this.valueError(value,this.state.maxValue);
+            this.setState({
+                startValue: value,
+                value: value,
+
+            });
     };
     setSettings = () => {
         this.setState({
-            isDisable: false
+            isDisable: true
         });
     };
-    inputError = (value) => {
-        let a = value;
-        debugger
-        if (a === this.state.maxValue || a < 0 || a === this.state.startValue || isNaN(a) || this.state.startValue < 0) {
+    valueError =(value,stateValue)=>{
+        if (value < 0 || isNaN(value) || value === stateValue ||
+            isNaN(stateValue) || stateValue === null || stateValue <= -1) {
             this.setState({
-                inputError: true
+                inputError: true,
+                isDisable: true
             })
         } else {
             this.setState({
-                inputError: false
+                inputError: false,
+                isDisable: false
             })
         }
     };
+    // maxValueError = (value) => {
+    //     if (value === 0 || isNaN(value) || value <= this.state.startValue ||
+    //         isNaN(this.state.startValue) || this.state.startValue === null || this.state.startValue <= -1) {
+    //         this.setState({
+    //             inputError: true,
+    //             isDisable: true
+    //         })
+    //     } else {
+    //         this.setState({
+    //             inputError: false,
+    //             isDisable: false
+    //         })
+    //     }
+    // };
+    // minValueError = (value) => {
+    //     if (value < 0 || isNaN(value) || value === this.state.maxValue ||
+    //         isNaN(this.state.maxValue) || this.state.maxValue === null) {
+    //         this.setState({
+    //             inputError: true,
+    //             isDisable: true
+    //         })
+    //     } else {
+    //         this.setState({
+    //             inputError: false,
+    //             isDisable: false
+    //         })
+    //     }
+    // };
 
     render = () => {
         return (
@@ -86,7 +116,8 @@ class App extends React.Component {
                              inputError={this.state.inputError}
                     />
                     <Buttons startValue={this.state.startValue}
-                             isDisable={this.state.isDisable}
+                             inputError={this.state.inputError}
+                             isDisable={!this.state.isDisable}
                              value={this.state.value}
                              resetValue={this.resetValue}
                              incValue={this.incValue}
@@ -101,7 +132,7 @@ class App extends React.Component {
                     <div className='buttonWrapper'>
                         <Button title='SET'
                                 callback={this.setSettings}
-                                disabled={this.state.inputError}/>
+                                disabled={this.state.isDisable}/>
                     </div>
                 </div>
             </div>

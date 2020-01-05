@@ -4,82 +4,46 @@ import Display from "./components/Display";
 import Buttons from "./components/Buttons";
 import SettingsDisplay from "./components/SettingsDisplay";
 import Button from "./components/Button";
+import {connect} from "react-redux";
+import {incValueAC, resetValue, changeMaxValue, changeMinValue, setSettings, valueErrorAC} from "./redux/reducer";
 
 class App extends React.Component {
-    componentDidMount() {
-        this.app = JSON.parse(localStorage.getItem('state'));
-        if (localStorage.getItem('state')) {
-            this.setState({
-                value: this.app.value,
-                startValue: this.app.startValue,
-                maxValue: this.app.maxValue,
-                isDisable: this.app.isDisable,
-                inputError: this.app.inputError,
-            })
-        } else {
-            this.setState({
-                value: 0,
-                startValue: 0,
-                maxValue: 6,
-                isDisable: true,
-                inputError: false,
-            })
-        }
-    }
 
-    componentWillUpdate(nextProps, nextState) {
-        localStorage.setItem('state', JSON.stringify(nextState));
-    }
-
-    state = {};
     incValue = () => {
-        let inc = this.state.value;
-        this.setState({
-            value: ++inc,
-        });
+        let inc = this.props.state.value;
+        this.props.incValue(inc);
     };
     resetValue = () => {
-        this.setState({
-            value: this.state.startValue
-        });
+        this.props.resetValue();
     };
-    changeMaxValue = (value) => {
-        this.valueError(value, this.state.startValue);
-        this.setState({
-            maxValue: value,
-            value: this.state.startValue,
-        });
+    onChangeMaxValue = (value) => {
+        this.props.valueErrorAC(value, this.props.state.startValue);
+        this.props.changeMaxValue(value);
     };
-    changeMinValue = (value) => {
-        this.valueError(value, this.state.maxValue);
-        this.setState({
-            startValue: value,
-            value: value,
-
-        });
+    onChangeMinValue = (value) => {
+        this.props.valueErrorAC(value, this.props.state.maxValue);
+        this.props.changeMinValue(value);
     };
-    setSettings = () => {
-        this.setState({
-            isDisable: true
-        });
+    onSetSettings = () => {
+        this.props.setSettings();
     };
-    valueError = (value, stateValue) => {
-        if (value < 0 || isNaN(value) || value === stateValue ||
-            isNaN(stateValue) || stateValue === null || stateValue <= -1) {
-            this.setState({
-                inputError: true,
-                isDisable: true
-            })
-        } else {
-            this.setState({
-                inputError: false,
-                isDisable: false
-            })
-        }
-    };
+    // valueError = (value, stateValue) => {
+    //     if (value < 0 || isNaN(value) || value === stateValue ||
+    //         isNaN(stateValue) || stateValue === null || stateValue <= -1) {
+    //         this.setState({
+    //             inputError: true,
+    //             isDisable: true
+    //         })
+    //     } else {
+    //         this.setState({
+    //             inputError: false,
+    //             isDisable: false
+    //         })
+    //     }
+    // };
     // maxValueError = (value) => {
-    //     if (value === 0 || isNaN(value) || value <= this.state.startValue ||
-    //         isNaN(this.state.startValue) || this.state.startValue === null || this.state.startValue <= -1) {
+    //     if (value === 0 || isNaN(value) || value <= this.props.startValue ||
+    //         isNaN(this.props.startValue) || this.props.startValue === null || this.props.startValue <= -1) {
     //         this.setState({
     //             inputError: true,
     //             isDisable: true
@@ -92,8 +56,8 @@ class App extends React.Component {
     //     }
     // };
     // minValueError = (value) => {
-    //     if (value < 0 || isNaN(value) || value === this.state.maxValue ||
-    //         isNaN(this.state.maxValue) || this.state.maxValue === null) {
+    //     if (value < 0 || isNaN(value) || value === this.props.maxValue ||
+    //         isNaN(this.props.maxValue) || this.props.maxValue === null) {
     //         this.setState({
     //             inputError: true,
     //             isDisable: true
@@ -110,29 +74,29 @@ class App extends React.Component {
         return (
             <div className="App">
                 <div className="countWrapper">
-                    <Display maxValue={this.state.maxValue}
-                             isDisable={this.state.isDisable}
-                             currentValue={this.state.value}
-                             inputError={this.state.inputError}
+                    <Display maxValue={this.props.state.maxValue}
+                             isDisable={this.props.state.isDisable}
+                             currentValue={this.props.state.value}
+                             inputError={this.props.state.inputError}
                     />
-                    <Buttons startValue={this.state.startValue}
-                             inputError={this.state.inputError}
-                             isDisable={!this.state.isDisable}
-                             value={this.state.value}
+                    <Buttons startValue={this.props.state.startValue}
+                             inputError={this.props.state.inputError}
+                             isDisable={!this.props.state.isDisable}
+                             value={this.props.state.value}
                              resetValue={this.resetValue}
                              incValue={this.incValue}
-                             maxValue={this.state.maxValue}/>
+                             maxValue={this.props.state.maxValue}/>
                 </div>
                 <div className='settingsWrapper'>
-                    <SettingsDisplay maxValue={this.state.maxValue}
-                                     inputError={this.state.inputError}
-                                     changeMaxValue={this.changeMaxValue}
-                                     changeMinValue={this.changeMinValue}
-                                     startValue={this.state.startValue}/>
+                    <SettingsDisplay maxValue={this.props.state.maxValue}
+                                     inputError={this.props.state.inputError}
+                                     changeMaxValue={this.onChangeMaxValue}
+                                     changeMinValue={this.onChangeMinValue}
+                                     startValue={this.props.state.startValue}/>
                     <div className='buttonWrapper'>
                         <Button title='SET'
-                                callback={this.setSettings}
-                                disabled={this.state.isDisable}/>
+                                callback={this.onSetSettings}
+                                disabled={this.props.state.isDisable}/>
                     </div>
                 </div>
             </div>
@@ -140,5 +104,19 @@ class App extends React.Component {
     }
 }
 
-export default App;
+let mapStateToProps = (state) => {
+    return {
+        state: state
+    }
+};
+export default connect(mapStateToProps, {
+    incValue: incValueAC,
+    resetValue,
+    changeMaxValue,
+    changeMinValue,
+    setSettings,
+    valueErrorAC,
+
+
+})(App);
 

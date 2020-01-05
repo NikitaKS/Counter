@@ -4,13 +4,13 @@ import '../App.css';
 class SettingsDisplay extends React.Component {
     changeMaxValue = (e) => {
         let value = parseInt(e.currentTarget.value);
-        if (!(value < this.props.startValue)){
+        if (!(value < this.props.startValue)) {
             this.props.changeMaxValue(value);
         }
     };
     changeMinValue = (e) => {
         let value = parseInt(e.currentTarget.value);
-        if (!(value > this.props.maxValue || value < -1)){
+        if (!(value > this.props.maxValue || value < -1)) {
             this.props.changeMinValue(value);
         }
     };

@@ -44,26 +44,26 @@ class App extends React.Component {
         });
     };
     changeMaxValue = (value) => {
-            this.valueError(value,this.state.startValue);
-            this.setState({
-                maxValue: value,
-                value: this.state.startValue,
-            });
+        this.valueError(value, this.state.startValue);
+        this.setState({
+            maxValue: value,
+            value: this.state.startValue,
+        });
     };
     changeMinValue = (value) => {
-            this.valueError(value,this.state.maxValue);
-            this.setState({
-                startValue: value,
-                value: value,
+        this.valueError(value, this.state.maxValue);
+        this.setState({
+            startValue: value,
+            value: value,
 
-            });
+        });
     };
     setSettings = () => {
         this.setState({
             isDisable: true
         });
     };
-    valueError =(value,stateValue)=>{
+    valueError = (value, stateValue) => {
         if (value < 0 || isNaN(value) || value === stateValue ||
             isNaN(stateValue) || stateValue === null || stateValue <= -1) {
             this.setState({
